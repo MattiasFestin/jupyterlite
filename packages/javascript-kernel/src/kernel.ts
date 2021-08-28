@@ -95,7 +95,7 @@ export class JavaScriptKernel extends BaseKernel implements IKernel {
   ): Promise<KernelMessage.IExecuteReplyMsg['content']> {
     const { code } = content;
     try {
-      const result = this._eval(code);
+      const result = await this._eval(code);
 
       this.publishExecuteResult({
         execution_count: this.executionCount,
@@ -237,8 +237,12 @@ export class JavaScriptKernel extends BaseKernel implements IKernel {
    *
    * @param code The code to execute.
    */
-  protected _eval(code: string): string {
-    return this._evalFunc(this._iframe.contentWindow, code);
+  protected async _eval(code: string): Promise<string> {
+    if (code && typeof code === 'string' && code.match(/(:?^|\s+)await\s+/gm)) {
+      return await this._evalAsyncFunc(this._iframe.contentWindow, code);
+    } else {
+      return this._evalFunc(this._iframe.contentWindow, code);
+    }
   }
 
   /**
@@ -283,11 +287,20 @@ export class JavaScriptKernel extends BaseKernel implements IKernel {
         window.onerror = function(message, source, lineno, colno, error) {
           console.error(message);
         }
+
+        window.onunhandledrejection = function (event) {
+          console.error('Unhandled promise rejection reason: ', event.reason);
+        }
       `
     );
   }
 
   private _iframe: HTMLIFrameElement;
   private _evalFunc = new Function('window', 'code', 'return window.eval(code);');
+  private AsyncFunction = Object.getPrototypeOf(async () => {
+    return;
+  }).constructor;
+  private _evalAsyncFunc = (window: any, code: string) =>
+    new this.AsyncFunction('window', code)(window);
   private _ready = new PromiseDelegate<void>();
 }
