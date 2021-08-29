@@ -4,6 +4,10 @@ import { BaseKernel, IKernel } from '@jupyterlite/kernel';
 
 import { PromiseDelegate } from '@lumino/coreutils';
 
+import escodegen from 'escodegen';
+import * as espree from 'espree';
+// import espree from 'espree';
+
 /**
  * A kernel that executes code in an IFrame.
  */
@@ -95,7 +99,11 @@ export class JavaScriptKernel extends BaseKernel implements IKernel {
   ): Promise<KernelMessage.IExecuteReplyMsg['content']> {
     const { code } = content;
     try {
-      const result = await this._eval(code);
+      let result = this._eval(code);
+
+      if (result instanceof Promise) {
+        result = await result;
+      }
 
       this.publishExecuteResult({
         execution_count: this.executionCount,
@@ -237,9 +245,9 @@ export class JavaScriptKernel extends BaseKernel implements IKernel {
    *
    * @param code The code to execute.
    */
-  protected async _eval(code: string): Promise<string> {
+  protected _eval(code: string): string | Promise<string> {
     if (code && typeof code === 'string' && code.match(/(:?^|\s+)await\s+/gm)) {
-      return await this._evalAsyncFunc(this._iframe.contentWindow, code);
+      return this._evalAsyncFunc(this._iframe.contentWindow, code);
     } else {
       return this._evalFunc(this._iframe.contentWindow, code);
     }
@@ -296,11 +304,54 @@ export class JavaScriptKernel extends BaseKernel implements IKernel {
   }
 
   private _iframe: HTMLIFrameElement;
-  private _evalFunc = new Function('window', 'code', 'return window.eval(code);');
+
   private AsyncFunction = Object.getPrototypeOf(async () => {
     return;
   }).constructor;
+
+  private _evalFunc = (window: any, code: string) =>
+    new Function('window', this._ReturnLastStatement(code))(window);
+
   private _evalAsyncFunc = (window: any, code: string) =>
-    new this.AsyncFunction('window', code)(window);
+    new this.AsyncFunction('window', this._ReturnLastStatement(code))(window);
+
+  private _ReturnLastStatement = (code: string) => {
+    const wrappedcode = `async () => {
+      ${code}
+    }`;
+
+    let ast = espree.parse(wrappedcode, {
+      ecmaVersion: espree.latestEcmaVersion,
+      ecmaFeatures: {
+        globalReturn: true,
+        impliedStrict: true
+      }
+    });
+
+    ast = ast.body[0].expression.body;
+
+    const lastStatement = ast.body[ast.body.length - 1];
+
+    if (lastStatement && lastStatement.type) {
+      switch (lastStatement.type) {
+        case 'ExpressionStatement':
+          ast.body[ast.body.length - 1] = {
+            type: 'ReturnStatement',
+            argument: lastStatement
+          };
+          break;
+
+        default:
+          break;
+      }
+
+      code = escodegen.generate(ast, {
+        parse: espree.parse
+      });
+    }
+
+    return code;
+  };
+
   private _ready = new PromiseDelegate<void>();
 }
