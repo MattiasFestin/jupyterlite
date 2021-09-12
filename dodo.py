@@ -612,10 +612,18 @@ def task_version():
     yield dict(
         name="bump",
         doc="bump the version",
-        actions=[(U.bump,)],
+        actions=[(U.bump_version,)],
         pos_arg="spec",
         verbosity=1,
     )
+
+    # TODO: how to get the version without the doit task printed?
+    # yield dict(
+    #     title=lambda _: None,
+    #     name="get",
+    #     doc="get the version",
+    #     actions=[lambda: print(D.PY_VERSION)],
+    # )
 
 
 class C:
@@ -727,7 +735,12 @@ class D:
     APP = json.loads(P.APP_PACKAGE_JSON.read_text(**C.ENC))
     APP_VERSION = APP["version"]
     # derive the PEP-compatible version
-    PY_VERSION = APP["version"].replace("-alpha.", "a")
+    PY_VERSION = (
+        APP["version"]
+        .replace("-alpha.", "a")
+        .replace("-beta.", "b")
+        .replace("-rc.", "rc")
+    )
 
     PACKAGE_JSONS = {
         p.parent.name: json.loads(p.read_text(**C.ENC)) for p in P.PACKAGE_JSONS
@@ -1174,56 +1187,7 @@ class U:
         )
 
     @staticmethod
-    def index_wheels(wheel_index, wheels):
-        """create a warehouse-like index for the wheels"""
-
-        import datetime
-
-        import pkginfo
-
-        wheel_dir = wheel_index.parent
-        all_json = {}
-
-        for whl_path in wheels:
-            metadata = pkginfo.get_metadata(str(whl_path))
-            whl_stat = whl_path.stat()
-            whl_isodate = (
-                datetime.datetime.fromtimestamp(
-                    whl_stat.st_mtime, tz=datetime.timezone.utc
-                )
-                .isoformat()
-                .split("+")[0]
-                + "Z"
-            )
-            whl_bytes = whl_path.read_bytes()
-            whl_sha256 = sha256(whl_bytes).hexdigest()
-            whl_md5 = md5(whl_bytes).hexdigest()
-            if metadata.name not in all_json:
-                all_json[metadata.name] = {"releases": {}}
-            all_json[metadata.name]["releases"][metadata.version] = [
-                {
-                    "comment_text": "",
-                    "digests": {"sha256": whl_sha256, "md5": whl_md5},
-                    "downloads": -1,
-                    "filename": whl_path.name,
-                    "has_sig": False,
-                    "md5_digest": whl_md5,
-                    "packagetype": "bdist_wheel",
-                    "python_version": "py3",
-                    "requires_python": metadata.requires_python,
-                    "size": whl_stat.st_size,
-                    "upload_time": whl_isodate,
-                    "upload_time_iso_8601": whl_isodate,
-                    "url": f"./{whl_path.name}",
-                    "yanked": False,
-                    "yanked_reason": None,
-                }
-            ]
-            shutil.copy2(whl_path, wheel_dir / whl_path.name)
-
-        wheel_index.write_text(json.dumps(all_json, indent=2, sort_keys=2), **C.ENC)
-
-    def bump(spec):
+    def bump_version(spec):
         print(f"Bumping to {spec}")
 
 
