@@ -2137,6 +2137,33 @@
     "@lumino/widgets" "^1.19.0"
     react "^17.0.1"
 
+"@jupyterlab/htmlviewer-extension@~3.1.12":
+  version "3.1.18"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/htmlviewer-extension/-/htmlviewer-extension-3.1.18.tgz#e88c7c71e267e0f78b1db0342bfad3a2ee9b9cd3"
+  integrity sha512-lI2TDGmfkq1SpAR4VEottBWfk2QrrdOoY8Jr9IpAiW9OPwMznkCpKAry5N5G+hdTKdLBU5uknD1k4C9O+a2Lfw==
+  dependencies:
+    "@jupyterlab/application" "^3.1.18"
+    "@jupyterlab/apputils" "^3.1.18"
+    "@jupyterlab/docregistry" "^3.1.18"
+    "@jupyterlab/htmlviewer" "^3.1.18"
+    "@jupyterlab/translation" "^3.1.18"
+    "@jupyterlab/ui-components" "^3.1.18"
+
+"@jupyterlab/htmlviewer@^3.1.18":
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/@jupyterlab/htmlviewer/-/htmlviewer-3.3.4.tgz#1e06da4ed7fa2d57eeea3b22b1fdf73580d7261f"
+  integrity sha512-axwCA/kiY1ruiGzUyl2DaKLEoHVqHmtwaUsEDbeGPbYvBdrHpdmv6S671UuFds7sK8GqzXXhmhVg86BYiNK7+g==
+  dependencies:
+    "@jupyterlab/apputils" "^3.3.4"
+    "@jupyterlab/coreutils" "^5.3.4"
+    "@jupyterlab/docregistry" "^3.3.4"
+    "@jupyterlab/translation" "^3.3.4"
+    "@jupyterlab/ui-components" "^3.3.4"
+    "@lumino/coreutils" "^1.5.3"
+    "@lumino/signaling" "^1.4.3"
+    "@lumino/widgets" "^1.19.0"
+    react "^17.0.1"
+
 "@jupyterlab/imageviewer-extension@~3.1.12":
   version "3.1.18"
   resolved "https://registry.yarnpkg.com/@jupyterlab/imageviewer-extension/-/imageviewer-extension-3.1.18.tgz#232deff006aba602edd2a45e9f75f2962916a382"
@@ -3013,7 +3040,7 @@
     vega-lite "^4.0.2"
 
 "@jupyterlite/application-extension@file:packages/application-extension":
-  version "0.1.0-alpha.8"
+  version "0.1.0-alpha.11"
   dependencies:
     "@jupyterlab/application" "~3.1.12"
     "@jupyterlab/apputils" "~3.1.12"
@@ -3025,14 +3052,14 @@
     "@jupyterlab/services" "~6.1.12"
     "@jupyterlab/translation" "~3.1.12"
     "@jupyterlab/ui-components" "~3.1.12"
-    "@jupyterlite/ui-components" "^0.1.0-alpha.8"
+    "@jupyterlite/ui-components" "^0.1.0-alpha.11"
     "@lumino/algorithm" "^1.6.0"
     "@lumino/coreutils" "^1.8.0"
     "@lumino/widgets" "^1.23.0"
     y-webrtc "^10.2.0"
 
 "@jupyterlite/contents@file:packages/contents":
-  version "0.1.0-alpha.8"
+  version "0.1.0-alpha.11"
   dependencies:
     "@jupyterlab/nbformat" "~3.1.12"
     "@jupyterlab/services" "~6.1.12"
@@ -3041,29 +3068,29 @@
     localforage "^1.9.0"
 
 "@jupyterlite/iframe-extension@file:packages/iframe-extension":
-  version "0.1.0-alpha.8"
+  version "0.1.0-alpha.11"
   dependencies:
     "@jupyterlab/rendermime-interfaces" "~3.1.12"
     "@lumino/coreutils" "^1.8.0"
     "@lumino/widgets" "^1.19.0"
 
 "@jupyterlite/javascript-kernel-extension@file:packages/javascript-kernel-extension":
-  version "0.1.0-alpha.8"
+  version "0.1.0-alpha.11"
   dependencies:
-    "@jupyterlite/javascript-kernel" "^0.1.0-alpha.8"
-    "@jupyterlite/kernel" "^0.1.0-alpha.8"
-    "@jupyterlite/server" "^0.1.0-alpha.8"
+    "@jupyterlite/javascript-kernel" "^0.1.0-alpha.11"
+    "@jupyterlite/kernel" "^0.1.0-alpha.11"
+    "@jupyterlite/server" "^0.1.0-alpha.11"
 
 "@jupyterlite/javascript-kernel@file:packages/javascript-kernel":
-  version "0.1.0-alpha.8"
+  version "0.1.0-alpha.11"
   dependencies:
-    "@jupyterlite/kernel" "^0.1.0-alpha.8"
+    "@jupyterlite/kernel" "^0.1.0-alpha.11"
     "@types/escodegen" "^0.0.7"
     escodegen "^2.0.0"
     espree "^8.0.0"
 
 "@jupyterlite/kernel@file:packages/kernel":
-  version "0.1.0-alpha.8"
+  version "0.1.0-alpha.11"
   dependencies:
     "@jupyterlab/observables" "~4.1.12"
     "@jupyterlab/services" "~6.1.12"
@@ -3074,20 +3101,20 @@
     mock-socket "^9.0.3"
 
 "@jupyterlite/pyolite-kernel-extension@file:packages/pyolite-kernel-extension":
-  version "0.1.0-alpha.8"
+  version "0.1.0-alpha.11"
   dependencies:
     "@jupyterlab/coreutils" "~5.1.12"
-    "@jupyterlite/kernel" "^0.1.0-alpha.8"
-    "@jupyterlite/pyolite-kernel" "^0.1.0-alpha.8"
-    "@jupyterlite/server" "^0.1.0-alpha.8"
+    "@jupyterlite/kernel" "^0.1.0-alpha.11"
+    "@jupyterlite/pyolite-kernel" "^0.1.0-alpha.11"
+    "@jupyterlite/server" "^0.1.0-alpha.11"
 
 "@jupyterlite/pyolite-kernel@file:packages/pyolite-kernel":
-  version "0.1.0-alpha.8"
+  version "0.1.0-alpha.11"
   dependencies:
-    "@jupyterlite/kernel" "^0.1.0-alpha.8"
+    "@jupyterlite/kernel" "^0.1.0-alpha.11"
 
 "@jupyterlite/retro-application-extension@file:packages/retro-application-extension":
-  version "0.1.0-alpha.8"
+  version "0.1.0-alpha.11"
   dependencies:
     "@jupyterlab/application" "~3.1.12"
     "@jupyterlab/console" "~3.1.12"
@@ -3096,24 +3123,24 @@
     "@jupyterlab/services" "~6.1.12"
 
 "@jupyterlite/server@file:packages/server-extension":
-  version "0.1.0-alpha.8"
+  version "0.1.0-alpha.11"
   dependencies:
-    "@jupyterlite/kernel" "^0.1.0-alpha.8"
-    "@jupyterlite/server" "^0.1.0-alpha.8"
-    "@jupyterlite/session" "^0.1.0-alpha.8"
-    "@jupyterlite/settings" "^0.1.0-alpha.8"
-    "@jupyterlite/translation" "^0.1.0-alpha.8"
+    "@jupyterlite/kernel" "^0.1.0-alpha.11"
+    "@jupyterlite/server" "^0.1.0-alpha.11"
+    "@jupyterlite/session" "^0.1.0-alpha.11"
+    "@jupyterlite/settings" "^0.1.0-alpha.11"
+    "@jupyterlite/translation" "^0.1.0-alpha.11"
 
 "@jupyterlite/session@file:packages/session":
-  version "0.1.0-alpha.8"
+  version "0.1.0-alpha.11"
   dependencies:
     "@jupyterlab/services" "~6.1.12"
-    "@jupyterlite/kernel" "^0.1.0-alpha.8"
+    "@jupyterlite/kernel" "^0.1.0-alpha.11"
     "@lumino/algorithm" "^1.6.0"
     "@lumino/coreutils" "^1.8.0"
 
 "@jupyterlite/settings@file:packages/settings":
-  version "0.1.0-alpha.8"
+  version "0.1.0-alpha.11"
   dependencies:
     "@jupyterlab/coreutils" "~5.1.12"
     "@jupyterlab/settingregistry" "~3.1.12"
@@ -3122,10 +3149,13 @@
     localforage "^1.9.0"
 
 "@jupyterlite/translation@file:packages/translation":
-  version "0.1.0-alpha.8"
+  version "0.1.0-alpha.11"
+  dependencies:
+    "@jupyterlab/coreutils" "~5.1.12"
+    "@lumino/coreutils" "^1.8.0"
 
 "@jupyterlite/ui-components@file:packages/ui-components":
-  version "0.1.0-alpha.8"
+  version "0.1.0-alpha.11"
   dependencies:
     "@jupyterlab/ui-components" "^3.1.12"
 
