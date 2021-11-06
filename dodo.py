@@ -858,7 +858,6 @@ class B:
     EXAMPLE_DEPS = BUILD / "depfinder"
 
     RAW_WHEELS = BUILD / "wheels"
-    RAW_WHEELS_REQS = RAW_WHEELS / "requirements.txt"
     DOCS_APP = BUILD / "docs-app"
     DOCS_APP_SHA256SUMS = DOCS_APP / "SHA256SUMS"
     DOCS_APP_ARCHIVE = DOCS_APP / f"""jupyterlite-docs-{D.APP_VERSION}.tgz"""
@@ -1287,7 +1286,7 @@ class U:
                 if pkg in raw:
                     if spec not in raw:
                         unpinned += [spec]
-                    if not wheels.get(pkg, {}).get("releases",{}).get(version):
+                    if not wheels.get(pkg, {}).get(version):
                         uncached += [spec]
 
             if unpinned:
