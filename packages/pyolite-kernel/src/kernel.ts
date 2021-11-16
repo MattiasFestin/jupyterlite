@@ -1,3 +1,5 @@
+import { URLExt } from '@jupyterlab/coreutils';
+
 import { KernelMessage } from '@jupyterlab/services';
 
 import { BaseKernel, IKernel } from '@jupyterlite/kernel';
@@ -6,14 +8,7 @@ import { PromiseDelegate } from '@lumino/coreutils';
 
 import worker from './worker?raw';
 
-// TODO: see https://github.com/jupyterlite/jupyterlite/issues/151
-// TODO: sync this version with the npm version (despite version mangling)
-import pyolite from '../py/pyolite/dist/pyolite-0.1.0a16-py3-none-any.whl';
-
-// TODO: sync this version with the pypi version
-import widgetsnbextension from '../py/widgetsnbextension/dist/widgetsnbextension-3.5.0-py3-none-any.whl';
-import nbformat from '../py/nbformat/dist/nbformat-4.2.0-py3-none-any.whl';
-import ipykernel from '../py/ipykernel/dist/ipykernel-5.5.5-py3-none-any.whl';
+import piplite from '../py/piplite/dist/piplite-0.1.0a16-py3-none-any.whl';
 
 /**
  * A kernel that executes Python code with Pyodide.
@@ -47,13 +42,18 @@ export class PyoliteKernel extends BaseKernel implements IKernel {
 
     const indexUrl = pyodideUrl.slice(0, pyodideUrl.lastIndexOf('/') + 1);
 
+    const pipliteWheel = (piplite as unknown) as string;
+    const pipliteWheelUrl = URLExt.join(window.location.origin, pipliteWheel);
+
     return [
       // first we need the pyodide initialization scripts...
       `importScripts("${options.pyodideUrl}");`,
       // ...we also need the location of the index of pyodide-built js/WASM...
       `var indexURL = "${indexUrl}";`,
+      // ...and the piplite wheel
+      `var _pipliteWheelUrl = "${pipliteWheelUrl}";`,
       // ...and the locations of custom wheel APIs and indices...
-      `var micropipUrls = ${JSON.stringify(options.micropipUrls)};`,
+      `var _micropipUrls = ${JSON.stringify(options.micropipUrls)};`,
       // ...finally, the worker... which _must_ appear last!
       worker.toString()
     ];
@@ -318,10 +318,5 @@ export namespace PyoliteKernel {
      * The URLs from which to attempt PyPI API requests
      */
     micropipUrls: string[];
-
-    /**
-     * The URL to fetch the Pyolite wheel.
-     */
-    pyoliteWheel?: string;
   }
 }
