@@ -132,7 +132,8 @@ const settings: JupyterLiteServerPlugin<ISettings> = {
   autoStart: true,
   provides: ISettings,
   activate: (app: JupyterLiteServer) => {
-    return new Settings();
+    const settingsStorageName = PageConfig.getOption('settingsStorageName');
+    return new Settings({ settingsStorageName });
   }
 };
 
