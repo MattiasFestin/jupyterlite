@@ -11,13 +11,20 @@ const Build = require('@jupyterlab/builder').Build;
 const WPPlugin = require('@jupyterlab/builder').WPPlugin;
 const baseConfig = require('@jupyterlab/builder/lib/webpack.config.base');
 
-const packageJson = './package.json';
-const data = fs.readJSONSync(packageJson);
+// const packageJson = './package.json';
+// const data = fs.readJSONSync(packageJson);
+
+const APPS = ['lab', 'retro'];
+
+const APP_DATA = APPS.reduce((memo, app) => {
+  memo[app] = fs.readJSONSync(`./${app}/package.json`);
+  return memo;
+}, {});
 
 /**
  * Create the webpack ``shared`` configuration
  */
-function createShared(packageData) {
+function createShared(packageData, mergedShare = null) {
   // Set up module federation sharing config
   const shared = {};
   const extensionPackages = packageData.jupyterlab.extensions;
@@ -68,7 +75,7 @@ function createShared(packageData) {
   }
 
   // Now merge the extra shared config
-  const mergedShare = {};
+  mergedShare = mergedShare || {};
   for (let sharedConfig of extraShared) {
     for (let [pkg, config] of Object.entries(sharedConfig)) {
       // Do not override the basic share config from resolutions
@@ -114,48 +121,58 @@ function createShared(packageData) {
   return shared;
 }
 
-const buildDir = './build';
-const topLevelBuild = path.resolve(path.join('..', buildDir));
-// Generate webpack config to copy extension assets to the build directory,
-// such as setting schema files, theme assets, etc.
-const extensionAssetConfig = Build.ensureAssets({
-  packageNames: data.jupyterlab.extensions,
-  output: buildDir,
-  schemaOutput: topLevelBuild,
-  themeOutput: topLevelBuild
-});
+const topLevelBuild = path.resolve('build');
 
-// Create a list of application extensions and mime extensions from
-// jlab.extensions
-const extensions = {};
-const mimeExtensions = {};
-for (const key of data.jupyterlab.extensions) {
-  const {
-    jupyterlab: { extension, mimeExtension }
-  } = require(`${key}/package.json`);
-  if (extension !== undefined) {
-    extensions[key] = extension === true ? '' : extension;
+const allAssetConfig = [];
+const allEntryPoints = {};
+
+for (const [name, data] of Object.entries(APP_DATA)) {
+  const buildDir = path.join(name, 'build');
+
+  const packageNames = data.jupyterlab.extensions;
+  // Generate webpack config to copy extension assets to the build directory,
+  // such as setting schema files, theme assets, etc.
+  const extensionAssetConfig = Build.ensureAssets({
+    packageNames,
+    output: buildDir,
+    schemaOutput: topLevelBuild,
+    themeOutput: topLevelBuild
+  });
+
+  allAssetConfig.push(extensionAssetConfig);
+
+  // Create a list of application extensions and mime extensions from
+  // jlab.extensions
+  const extensions = {};
+  const mimeExtensions = {};
+  for (const key of packageNames) {
+    const {
+      jupyterlab: { extension, mimeExtension }
+    } = require(`${key}/package.json`);
+    if (extension !== undefined) {
+      extensions[key] = extension === true ? '' : extension;
+    }
+    if (mimeExtension !== undefined) {
+      mimeExtensions[key] = mimeExtension === true ? '' : mimeExtension;
+    }
   }
-  if (mimeExtension !== undefined) {
-    mimeExtensions[key] = mimeExtension === true ? '' : mimeExtension;
-  }
+  // Create the entry point and other assets in build directory.
+  const template = Handlebars.compile(
+    fs.readFileSync(path.resolve(`./${name}/index.template.js`)).toString()
+  );
+  fs.writeFileSync(
+    path.join(name, 'build', 'index.js'),
+    template({ extensions, mimeExtensions })
+  );
+  // Create the bootstrap file that loads federated extensions and calls the
+  // initialization logic in index.js
+  const entryPoint = `./${name}/build/bootstrap.js`;
+  fs.copySync('bootstrap.js', entryPoint);
+  allEntryPoints[`${name}/bundle`] = entryPoint;
+  allEntryPoints[`${name}/publicpath`] = path.resolve(name, 'publicpath.js');
 }
 
-// Create the entry point and other assets in build directory.
-const template = Handlebars.compile(
-  fs.readFileSync(path.resolve('./index.template.js')).toString()
-);
-fs.writeFileSync(
-  path.join(buildDir, 'index.js'),
-  template({ extensions, mimeExtensions })
-);
-
-// Create the bootstrap file that loads federated extensions and calls the
-// initialization logic in index.js
-const entryPoint = './build/bootstrap.js';
-fs.copySync('../bootstrap.js', entryPoint);
-
-const name = path.basename(path.dirname(path.resolve(packageJson)));
+// const name = path.basename(path.dirname(path.resolve(packageJson)));
 
 /**
  * Define a custom plugin to ensure schemas are statically compiled
@@ -196,7 +213,7 @@ module.exports = [
   merge(baseConfig, {
     mode: 'development',
     devtool: 'source-map',
-    entry: ['./publicpath.js', entryPoint],
+    entry: allEntryPoints,
     resolve: {
       fallback: {
         util: false
@@ -208,7 +225,7 @@ module.exports = [
         type: 'var',
         name: ['_JUPYTERLAB', 'CORE_OUTPUT']
       },
-      filename: `${name}/bundle.js`,
+      filename: '[name].js',
       chunkFilename: '[name].[contenthash].js',
       // to generate valid wheel names
       assetModuleFilename: '[name][ext][query]'
@@ -226,7 +243,8 @@ module.exports = [
       ]
     },
     optimization: {
-      moduleIds: 'deterministic'
+      moduleIds: 'deterministic',
+      removeEmptyChunks: false
     },
     plugins: [
       new WPPlugin.JSONLicenseWebpackPlugin({}),
@@ -242,9 +260,11 @@ module.exports = [
           name: ['_JUPYTERLAB', 'CORE_LIBRARY_FEDERATION']
         },
         name: 'CORE_FEDERATION',
-        shared: createShared(data)
+        shared: Object.entries(APP_DATA).reduce((memo, [name, data]) => {
+          return createShared(data, memo);
+        }, {})
       }),
       new CompileSchemasPlugin()
     ]
   })
-].concat(extensionAssetConfig);
+].concat(...allAssetConfig);
