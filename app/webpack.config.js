@@ -243,8 +243,7 @@ module.exports = [
       ]
     },
     optimization: {
-      moduleIds: 'deterministic',
-      removeEmptyChunks: false
+      moduleIds: 'deterministic'
     },
     plugins: [
       new WPPlugin.JSONLicenseWebpackPlugin({}),
