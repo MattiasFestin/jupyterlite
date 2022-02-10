@@ -13,7 +13,7 @@ const baseConfig = require('@jupyterlab/builder/lib/webpack.config.base');
 
 const topLevelData = require('./package.json');
 
-const liteAppData = topLevelData.jupyterlite.liteApps.reduce(
+const liteAppData = topLevelData.jupyterlite.apps.reduce(
   (memo, app) => ({ ...memo, [app]: require(`./${app}/package.json`) }),
   {}
 );
