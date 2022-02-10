@@ -10352,12 +10352,16 @@ levn@~0.3.0:
     type-check "~0.3.2"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 lib0@^0.2.31, lib0@^0.2.42, lib0@^0.2.49:
   version "0.2.50"
   resolved "https://registry.yarnpkg.com/lib0/-/lib0-0.2.50.tgz#08aa574702459edc9c4ed9ad5ff7bcf217d51552"
   integrity sha512-5hlTPRPOCg6R8bx9Kh+8RwCkv2oR/W4XxRuySwOHHO2RbAEljNPJz85QPkB6qgl09h8kzWfGIP4/YHmiIP2Ivw==
 =======
 lib0@^0.2.31, lib0@^0.2.41, lib0@^0.2.42, lib0@^0.2.43:
+=======
+lib0@^0.2.31, lib0@^0.2.42, lib0@^0.2.43:
+>>>>>>> re-solving
   version "0.2.43"
   resolved "https://registry.yarnpkg.com/lib0/-/lib0-0.2.43.tgz#1c2ed1fb2e9fe136e92abef7ca56875f2ee66b07"
   integrity sha512-MJ1KLoz5p3gljIUBfdjjNuL/wlWHHK6+DrcIRhzSRLvtAu1XNdRtRGATYM51KSTI0P2nxJZFQM8rwCH6ga9KUw==
@@ -11281,12 +11285,16 @@ mz@^2.5.0:
     thenify-all "^1.0.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 nanoid@^3.1.23, nanoid@^3.3.1:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.2.tgz#c89622fafb4381cd221421c69ec58547a1eec557"
   integrity sha512-CuHBogktKwpm5g2sRgv83jEy2ijFzBwMoYA60orPDR7ynsLijJDqgsi4RDGj3OJpy3Ieb+LYwiRmIOGyytgITA==
 =======
 nanoid@^3.1.23, nanoid@^3.1.30:
+=======
+nanoid@^3.1.30:
+>>>>>>> re-solving
   version "3.1.31"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.31.tgz#f5b58a1ce1b7604da5f0605757840598d8974dc6"
   integrity sha512-ZivnJm0o9bb13p2Ot5CpgC2rQdzB9Uxm/mFZweqm5eMViqOJe3PV6LU2E30SiLgheesmcPrjquqraoolONSA0A==
@@ -13231,6 +13239,7 @@ rxjs@^6.4.0, rxjs@^6.6.0:
   dependencies:
     tslib "^1.9.0"
 
+<<<<<<< HEAD
 rxjs@^7.5.1:
   version "7.5.5"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.5.5.tgz#2ebad89af0f560f460ad5cc4213219e1f7dd4e9f"
@@ -13239,11 +13248,18 @@ rxjs@^7.5.1:
     tslib "^2.1.0"
 
 safe-buffer@5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
+=======
+safe-buffer@5.1.2, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@^5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
+>>>>>>> re-solving
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
   integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
 
+<<<<<<< HEAD
 safe-buffer@5.2.1, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1, safe-buffer@^5.1.2, safe-buffer@^5.2.0, safe-buffer@^5.2.1, safe-buffer@~5.2.0:
+=======
+safe-buffer@^5.2.0, safe-buffer@^5.2.1:
+>>>>>>> re-solving
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.2.1.tgz#1eaf9fa9bdb1fdd4ec75f58f9cdb4e6b7827eec6"
   integrity sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==
@@ -13670,10 +13686,17 @@ source-list-map@^2.0.0:
   resolved "https://registry.yarnpkg.com/source-list-map/-/source-list-map-2.0.1.tgz#3993bd873bfc48479cca9ea3a547835c7c154b34"
   integrity sha512-qnQ7gVMxGNxsiL4lEuJwe/To8UnK7fAnmbGEEH8RpLouuKbeEm0lhbQVFIrNSuB+G7tVrAlVsZgETT5nljf+Iw==
 
+<<<<<<< HEAD
 source-map-js@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
   integrity sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==
+=======
+source-map-js@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.1.tgz#a1741c131e3c77d048252adfa24e23b908670caf"
+  integrity sha512-4+TN2b3tqOCd/kaGRJ/sTYA0tR0mdXx26ipdolxcwtJVqEnqNYvlCAt1q3ypy4QMlYus+Zh34RNtYLoq2oQ4IA==
+>>>>>>> re-solving
 
 source-map-resolve@^0.5.0:
   version "0.5.3"
@@ -13687,10 +13710,14 @@ source-map-resolve@^0.5.0:
     urix "^0.1.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 source-map-support@^0.5.6, source-map-support@~0.5.20:
 =======
 source-map-support@^0.5.6, source-map-support@~0.5.19, source-map-support@~0.5.20:
 >>>>>>> start templates
+=======
+source-map-support@^0.5.6, source-map-support@~0.5.20:
+>>>>>>> re-solving
   version "0.5.21"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.21.tgz#04fe7c7f9e1ed2d662233c28cb2b35b9f63f6e4f"
   integrity sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==
@@ -14994,6 +15021,14 @@ vega-event-selector@^3.0.0, vega-event-selector@~3.0.0:
   resolved "https://registry.yarnpkg.com/vega-event-selector/-/vega-event-selector-3.0.0.tgz#7b855ac0c3ddb59bc5b5caa0d96dbbc9fbd33a4c"
   integrity sha512-Gls93/+7tEJGE3kUuUnxrBIxtvaNeF01VIFB2Q2Of2hBIBvtHX74jcAdDtkh5UhhoYGD8Q1J30P5cqEBEwtPoQ==
 
+<<<<<<< HEAD
+=======
+vega-event-selector@~2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/vega-event-selector/-/vega-event-selector-2.0.6.tgz#6beb00e066b78371dde1a0f40cb5e0bbaecfd8bc"
+  integrity sha512-UwCu50Sqd8kNZ1X/XgiAY+QAyQUmGFAwyDu7y0T5fs6/TPQnDo/Bo346NgSgINBEhEKOAMY1Nd/rPOk4UEm/ew==
+
+>>>>>>> re-solving
 vega-expression@^5.0.0, vega-expression@~5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/vega-expression/-/vega-expression-5.0.0.tgz#938f26689693a1e0d26716030cdaed43ca7abdfb"
@@ -15002,10 +15037,24 @@ vega-expression@^5.0.0, vega-expression@~5.0.0:
     "@types/estree" "^0.0.50"
     vega-util "^1.16.0"
 
+<<<<<<< HEAD
 vega-force@~4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/vega-force/-/vega-force-4.1.0.tgz#cc8dea972baa52adc60840ff744ebb9e57d8f1f5"
   integrity sha512-Sssf8iH48vYlz+E7/RpU+SUaJbuLoIL87U4tG2Av4gf/hRiImU49x2TI3EuhFWg1zpaCFxlz0CAaX++Oh/gjdw==
+=======
+vega-expression@~4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/vega-expression/-/vega-expression-4.0.1.tgz#c03e4fc68a00acac49557faa4e4ed6ac8a59c5fd"
+  integrity sha512-ZrDj0hP8NmrCpdLFf7Rd/xMUHGoSYsAOTaYp7uXZ2dkEH5x0uPy5laECMc8TiQvL8W+8IrN2HAWCMRthTSRe2Q==
+  dependencies:
+    vega-util "^1.16.0"
+
+vega-force@~4.0.7:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/vega-force/-/vega-force-4.0.7.tgz#6dc39ecb7889d9102661244d62fbc8d8714162ee"
+  integrity sha512-pyLKdwXSZ9C1dVIqdJOobvBY29rLvZjvRRTla9BU/nMwAiAGlGi6WKUFdRGdneyGe3zo2nSZDTZlZM/Z5VaQNA==
+>>>>>>> re-solving
   dependencies:
     d3-force "^3.0.0"
     vega-dataflow "^5.7.3"
@@ -15190,12 +15239,16 @@ vega-schema-url-parser@^2.2.0:
   integrity sha512-yAtdBnfYOhECv9YC70H2gEiqfIbVkq09aaE4y/9V/ovEFmH9gPKaEgzIZqgT7PSPQjKhsNkb6jk6XvSoboxOBw==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 vega-selections@^5.3.1:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/vega-selections/-/vega-selections-5.4.0.tgz#c2783897421fa39b674c015fa8f15a0023b8054e"
   integrity sha512-Un3JdLDPjIpF9Dh4sw6m1c/QAcfam6m1YXHJ9vJxE/GdJ+sOrPxc7bcEU8VhOmTUN7IQUn4/1ry4JqqOVMbEhw==
 =======
 vega-selections@^5.3.0, vega-selections@^5.3.1:
+=======
+vega-selections@^5.3.1:
+>>>>>>> re-solving
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/vega-selections/-/vega-selections-5.3.1.tgz#af5c3cc6532a55a5b692eb0fcc2a1d8d521605a4"
   integrity sha512-cm4Srw1WHjcLGXX7GpxiUlfESv8XPu5b6Vh3mqMDPU94P2FO91SR9gei+EtRdt+KCFgIjr//MnRUjg/hAWwjkQ==
