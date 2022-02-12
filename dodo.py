@@ -626,6 +626,7 @@ def task_docs():
             name="post:images",
             doc="clean sphinx-jsonschema duplicate ids",
             actions=[_optimize_images],
+            file_dep=[B.YARN_INTEGRITY],
         )
 
 
