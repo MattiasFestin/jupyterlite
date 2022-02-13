@@ -16,9 +16,6 @@
       "path": "./packages/application-extension"
     },
     {
-      "path": "./packages/console-extension"
-    },
-    {
       "path": "./packages/contents"
     },
     {
@@ -41,6 +38,9 @@
     },
     {
       "path": "./packages/pyolite-kernel-extension"
+    },
+    {
+      "path": "./packages/repl-extension"
     },
     {
       "path": "./packages/retro-application-extension"
