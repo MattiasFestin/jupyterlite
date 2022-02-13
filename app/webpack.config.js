@@ -38,7 +38,7 @@ function createShared(packageData, shared = null) {
   for (let pkg of extensionPackages) {
     if (!shared[pkg]) {
       shared[pkg] = {
-        requiredVersion: require(`${pkg}/package.json`).version
+        requiredVersion: require(`${pkg}/package.json`).version,
       };
     }
   }
@@ -51,7 +51,7 @@ function createShared(packageData, shared = null) {
     let pkgShared = {};
     let {
       dependencies = {},
-      jupyterlab: { sharedPackages = {} } = {}
+      jupyterlab: { sharedPackages = {} } = {},
     } = require(`${pkg}/package.json`);
     for (let [dep, requiredVersion] of Object.entries(dependencies)) {
       if (!shared[dep]) {
@@ -137,7 +137,7 @@ for (const [name, data] of Object.entries(liteAppData)) {
     packageNames,
     output: buildDir,
     schemaOutput: topLevelBuild,
-    themeOutput: topLevelBuild
+    themeOutput: topLevelBuild,
   });
 
   allAssetConfig.push(extensionAssetConfig);
@@ -148,7 +148,7 @@ for (const [name, data] of Object.entries(liteAppData)) {
   const mimeExtensions = {};
   for (const key of packageNames) {
     const {
-      jupyterlab: { extension, mimeExtension }
+      jupyterlab: { extension, mimeExtension },
     } = require(`${key}/package.json`);
     if (extension !== undefined) {
       extensions[key] = extension === true ? '' : extension;
@@ -179,7 +179,7 @@ for (const [name, data] of Object.entries(liteAppData)) {
         inject: false,
         minify: false,
         filename: `../${name}/${page}.html`,
-        template: `${name}/${page}.template.html`
+        template: `${name}/${page}.template.html`,
       })
     );
   }
@@ -197,9 +197,9 @@ class CompileSchemasPlugin {
       // ensure all schemas are statically compiled
       const schemaDir = path.resolve(topLevelBuild, './schemas');
       const files = glob.sync(`${schemaDir}/**/*.json`, {
-        ignore: [`${schemaDir}/all.json`]
+        ignore: [`${schemaDir}/all.json`],
       });
-      const all = files.map(file => {
+      const all = files.map((file) => {
         const schema = fs.readJSONSync(file);
         const pluginFile = file.replace(`${schemaDir}/`, '');
         const basename = path.basename(pluginFile, '.json');
@@ -212,7 +212,7 @@ class CompileSchemasPlugin {
           raw: '{}',
           schema,
           settings: {},
-          version: packageJson.version
+          version: packageJson.version,
         };
       });
 
@@ -229,39 +229,39 @@ module.exports = [
     entry: allEntryPoints,
     resolve: {
       fallback: {
-        util: false
-      }
+        util: false,
+      },
     },
     output: {
       path: topLevelBuild,
       library: {
         type: 'var',
-        name: ['_JUPYTERLAB', 'CORE_OUTPUT']
+        name: ['_JUPYTERLAB', 'CORE_OUTPUT'],
       },
       filename: '[name].js?_=[contenthash:7]',
       chunkFilename: '[name].[contenthash:7].js',
       // to generate valid wheel names
-      assetModuleFilename: '[name][ext][query]'
+      assetModuleFilename: '[name][ext][query]',
     },
     module: {
       rules: [
         {
           test: /pypi\/.*/,
-          type: 'asset/resource'
+          type: 'asset/resource',
         },
         {
           resourceQuery: /raw/,
-          type: 'asset/source'
+          type: 'asset/source',
         },
         // just keep the woff2 fonts from fontawesome
         {
           test: /fontawesome-free.*\.(svg|eot|ttf|woff)$/,
-          loader: 'ignore-loader'
-        }
-      ]
+          loader: 'ignore-loader',
+        },
+      ],
     },
     optimization: {
-      moduleIds: 'deterministic'
+      moduleIds: 'deterministic',
     },
     plugins: [
       new WPPlugin.JSONLicenseWebpackPlugin({}),
@@ -269,21 +269,21 @@ module.exports = [
         // Needed for Blueprint. See https://github.com/palantir/blueprint/issues/4393
         'process.env': '{}',
         // Needed for various packages using cwd(), like the path polyfill
-        process: { cwd: () => '/' }
+        process: { cwd: () => '/' },
       }),
       new ModuleFederationPlugin({
         library: {
           type: 'var',
-          name: ['_JUPYTERLAB', 'CORE_LIBRARY_FEDERATION']
+          name: ['_JUPYTERLAB', 'CORE_LIBRARY_FEDERATION'],
         },
         name: 'CORE_FEDERATION',
         shared: Object.values(liteAppData).reduce(
           (memo, data) => createShared(data, memo),
           {}
-        )
+        ),
       }),
       new CompileSchemasPlugin(),
-      ...allHtmlPlugins
-    ]
-  })
+      ...allHtmlPlugins,
+    ],
+  }),
 ].concat(...allAssetConfig);

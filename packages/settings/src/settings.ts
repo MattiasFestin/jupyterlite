@@ -31,7 +31,7 @@ export class Settings {
       name: this._settingsStorageName,
       description: 'Offline Storage for Settings',
       storeName: 'settings',
-      version: 1
+      version: 1,
     });
   }
 
@@ -64,13 +64,13 @@ export class Settings {
       await fetch(URLExt.join(settingsUrl, 'all.json'))
     ).json()) as IPlugin[];
     const settings = await Promise.all(
-      all.map(async plugin => {
+      all.map(async (plugin) => {
         const { id } = plugin;
         const raw = ((await this._storage.getItem(id)) as string) ?? plugin.raw;
         return {
           ...Private.override(plugin),
           raw,
-          settings: json5.parse(raw)
+          settings: json5.parse(raw),
         };
       })
     );
@@ -118,7 +118,7 @@ export class Settings {
       raw,
       schema,
       settings,
-      version: packageJson.version || '3.0.8'
+      version: packageJson.version || '3.0.8',
     });
   }
 
