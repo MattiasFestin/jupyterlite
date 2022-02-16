@@ -32,8 +32,18 @@ const contentsPlugin: JupyterLiteServerPlugin<IContents> = {
   provides: IContents,
   activate: (app: JupyterLiteServer) => {
     const contentsStorageName = PageConfig.getOption('contentsStorageName');
-    const contents = new Contents({ contentsStorageName });
+    return new Contents({ contentsStorageName });
+  },
+};
 
+/**
+ * A plugin providing the routes for the contents service.
+ */
+const contentsRoutesPlugin: JupyterLiteServerPlugin<void> = {
+  id: '@jupyterlite/server-extension:contents-routes',
+  autoStart: true,
+  requires: [IContents],
+  activate: (app: JupyterLiteServer, contents: IContents) => {
     // GET /api/contents/{path}/checkpoints - Get a list of checkpoints for a file
     app.router.get(
       '/api/contents/(.+)/checkpoints',
@@ -130,7 +140,6 @@ const contentsPlugin: JupyterLiteServerPlugin<IContents> = {
         return new Response(null, { status: 204 });
       }
     );
-    return contents;
   },
 };
 
@@ -143,8 +152,18 @@ const kernelsPlugin: JupyterLiteServerPlugin<IKernels> = {
   provides: IKernels,
   requires: [IKernelSpecs],
   activate: (app: JupyterLiteServer, kernelspecs: IKernelSpecs) => {
-    const kernels = new Kernels({ kernelspecs });
+    return new Kernels({ kernelspecs });
+  },
+};
 
+/**
+ * A plugin providing the routes for the kernels service
+ */
+const kernelsRoutesPlugin: JupyterLiteServerPlugin<void> = {
+  id: '@jupyterlite/server-extension:kernels-routes',
+  autoStart: true,
+  requires: [IKernels],
+  activate: (app: JupyterLiteServer, kernels: IKernels) => {
     // POST /api/kernels/{kernel_id} - Restart a kernel
     app.router.post(
       '/api/kernels/(.*)/restart',
@@ -162,8 +181,6 @@ const kernelsPlugin: JupyterLiteServerPlugin<IKernels> = {
         return new Response(JSON.stringify(res), { status: 204 });
       }
     );
-
-    return kernels;
   },
 };
 
@@ -175,18 +192,27 @@ const kernelSpecPlugin: JupyterLiteServerPlugin<IKernelSpecs> = {
   autoStart: true,
   provides: IKernelSpecs,
   activate: (app: JupyterLiteServer) => {
-    const kernelspecs = new KernelSpecs({});
-
-    app.router.get('/api/kernelspecs', async (req: Router.IRequest) => {
-      const res = kernelspecs.specs;
-      return new Response(JSON.stringify(res));
-    });
-
-    return kernelspecs;
+    return new KernelSpecs({});
   },
 };
 
 /**
+ * A plugin providing the routes for the kernelspec service.
+ */
+const kernelSpecRoutesPlugin: JupyterLiteServerPlugin<void> = {
+  id: '@jupyterlite/server-extension:kernelspec-routes',
+  autoStart: true,
+  requires: [IKernelSpecs],
+  activate: (app: JupyterLiteServer, kernelspecs: IKernelSpecs) => {
+    app.router.get('/api/kernelspecs', async (req: Router.IRequest) => {
+      const res = kernelspecs.specs;
+      return new Response(JSON.stringify(res));
+    });
+  },
+};
+
+/**
+<<<<<<< HEAD
 <<<<<<< HEAD
  * The licenses service plugin
  */
@@ -205,9 +231,13 @@ const licenses: JupyterLiteServerPlugin<ILicenses> = {
  * The nbconvert service plugin.
  * TODO: provide the service
 >>>>>>> Split routes into the server plugins
+=======
+ * A pluing providing the routes for the nbconvert service.
+ * TODO: provide the service in a separate plugin?
+>>>>>>> Split intro routes plugins
  */
-const nbconvertPlugin: JupyterLiteServerPlugin<void> = {
-  id: '@jupyterlite/server-extension:nbconvert',
+const nbconvertRoutesPlugin: JupyterLiteServerPlugin<void> = {
+  id: '@jupyterlite/server-extension:nbconvert-routes',
   autoStart: true,
   activate: (app: JupyterLiteServer) => {
     app.router.get('/api/nbconvert', async (req: Router.IRequest) => {
@@ -254,8 +284,18 @@ const sessionsPlugin: JupyterLiteServerPlugin<ISessions> = {
   provides: ISessions,
   requires: [IKernels],
   activate: (app: JupyterLiteServer, kernels: IKernels) => {
-    const sessions = new Sessions({ kernels });
+    return new Sessions({ kernels });
+  },
+};
 
+/**
+ * A plugin providing the routes for the session service.
+ */
+const sessionsRoutesPlugin: JupyterLiteServerPlugin<void> = {
+  id: '@jupyterlite/server-extension:sessions-routes',
+  autoStart: true,
+  requires: [ISessions],
+  activate: (app: JupyterLiteServer, sessions: ISessions) => {
     // GET /api/sessions/{session} - Get session
     app.router.get('/api/sessions/(.+)', async (req: Router.IRequest, id: string) => {
       const session = await sessions.get(id);
@@ -291,8 +331,6 @@ const sessionsPlugin: JupyterLiteServerPlugin<ISessions> = {
       return new Response(JSON.stringify(session), { status: 201 });
 >>>>>>> Split routes into the server plugins
     });
-
-    return sessions;
   },
 };
 
@@ -305,8 +343,18 @@ const settingsPlugin: JupyterLiteServerPlugin<ISettings> = {
   provides: ISettings,
   activate: (app: JupyterLiteServer) => {
     const settingsStorageName = PageConfig.getOption('settingsStorageName');
-    const settings = new Settings({ settingsStorageName });
+    return new Settings({ settingsStorageName });
+  },
+};
 
+/**
+ * A plugin providing the routes for the settings service.
+ */
+const settingsRoutesPlugin: JupyterLiteServerPlugin<void> = {
+  id: '@jupyterlite/server-extension:settings-routes',
+  autoStart: true,
+  requires: [ISettings],
+  activate: (app: JupyterLiteServer, settings: ISettings) => {
     // TODO: improve the regex
     // const pluginPattern = new RegExp(/(?:@([^/]+?)[/])?([^/]+?):(\w+)/);
     const pluginPattern = '/api/settings/((?:@([^/]+?)[/])?([^/]+?):([^:]+))$';
@@ -327,8 +375,6 @@ const settingsPlugin: JupyterLiteServerPlugin<ISettings> = {
       const plugins = await settings.getAll();
       return new Response(JSON.stringify(plugins));
     });
-
-    return settings;
   },
 };
 
@@ -354,6 +400,24 @@ const translationPlugin: JupyterLiteServerPlugin<ITranslation> = {
   },
 };
 
+/**
+ * A plugin providing the routes for the translation service.
+ */
+const translationRoutesPlugin: JupyterLiteServerPlugin<void> = {
+  id: '@jupyterlite/server-extension:translation-routes',
+  autoStart: true,
+  requires: [ITranslation],
+  activate: (app: JupyterLiteServer, translation: ITranslation) => {
+    app.router.get(
+      '/api/translations/?(.*)',
+      async (req: Router.IRequest, locale: string) => {
+        const data = await translation.get(locale || 'all');
+        return new Response(JSON.stringify(data));
+      }
+    );
+  },
+};
+
 const plugins: JupyterLiteServerPlugin<any>[] = [
 <<<<<<< HEAD
   contents,
@@ -366,13 +430,22 @@ const plugins: JupyterLiteServerPlugin<any>[] = [
   translation,
 =======
   contentsPlugin,
+  contentsRoutesPlugin,
   kernelsPlugin,
+  kernelsRoutesPlugin,
   kernelSpecPlugin,
-  nbconvertPlugin,
+  kernelSpecRoutesPlugin,
+  nbconvertRoutesPlugin,
   sessionsPlugin,
+  sessionsRoutesPlugin,
   settingsPlugin,
+  settingsRoutesPlugin,
   translationPlugin,
+<<<<<<< HEAD
 >>>>>>> Split routes into the server plugins
+=======
+  translationRoutesPlugin,
+>>>>>>> Split intro routes plugins
 ];
 
 export default plugins;
