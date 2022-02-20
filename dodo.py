@@ -643,7 +643,6 @@ def task_check():
                 B.DOCS,
                 "-p",
                 "no:warnings",
-                "--links-ext=html",
                 "--check-anchors",
                 "--check-links-ignore",
                 "^https?://",
@@ -1116,7 +1115,8 @@ class BB:
             / (src.name.rsplit(".", 1)[0] + ".html")
         )
         for src in [*P.DOCS_MD, *P.DOCS_IPYNB, *B.DOCS_TS_MODULES]
-        if P.DOCS in src.parents and "_static" not in str(src)
+        if P.DOCS in src.parents
+        and not ("_static" in str(src) or "ipynb_checkpoints" in str(src))
     ]
 
 
