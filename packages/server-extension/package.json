@@ -39,6 +39,7 @@
   "dependencies": {
     "@jupyterlab/coreutils": "~5.2.9",
     "@jupyterlite/kernel": "^0.1.0-alpha.24",
+    "@jupyterlite/licenses": "^0.1.0-alpha.24",
     "@jupyterlite/server": "^0.1.0-alpha.24",
     "@jupyterlite/session": "^0.1.0-alpha.24",
     "@jupyterlite/settings": "^0.1.0-alpha.24",

@@ -216,16 +216,21 @@ const kernelSpecRoutesPlugin: JupyterLiteServerPlugin<void> = {
 <<<<<<< HEAD
  * The licenses service plugin
  */
+<<<<<<< HEAD
 const licenses: JupyterLiteServerPlugin<ILicenses> = {
+=======
+const licensesPlugin: JupyterLiteServerPlugin<ILicenses> = {
+>>>>>>> linting
   id: '@jupyterlite/server-extension:licenses',
   autoStart: true,
   provides: ILicenses,
   activate: (app: JupyterLiteServer) => {
     return new Licenses();
-  }
+  },
 };
 
 /**
+<<<<<<< HEAD
  * The sessions service plugin.
 =======
  * The nbconvert service plugin.
@@ -233,6 +238,23 @@ const licenses: JupyterLiteServerPlugin<ILicenses> = {
 >>>>>>> Split routes into the server plugins
 =======
  * A pluing providing the routes for the nbconvert service.
+=======
+ * A plugin providing the routes for the licenses service.
+ */
+const licensesRoutesPlugin: JupyterLiteServerPlugin<void> = {
+  id: '@jupyterlite/server-extension:licenses-routes',
+  autoStart: true,
+  activate(app: JupyterLiteServer, licenses: ILicenses) {
+    app.router.get('/api/licenses', async (req: Router.IRequest) => {
+      const res = await licenses.get();
+      return new Response(JSON.stringify(res));
+    });
+  },
+};
+
+/**
+ * A plugin providing the routes for the nbconvert service.
+>>>>>>> linting
  * TODO: provide the service in a separate plugin?
 >>>>>>> Split intro routes plugins
  */
