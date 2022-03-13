@@ -75,7 +75,7 @@ const contentsPlugin: JupyterLiteServerPlugin<IContents> = {
       storageDrivers,
       localforage,
     });
-    app.started.then(() => contents.initStorage().catch(console.warn));
+    app.started.then(() => contents.initialize().catch(console.warn));
     return contents;
   },
 };
@@ -416,7 +416,7 @@ const settingsPlugin: JupyterLiteServerPlugin<ISettings> = {
     );
     const { localforage } = forage;
     const settings = new Settings({ storageName, storageDrivers, localforage });
-    app.started.then(() => settings.initStorage().catch(console.warn));
+    app.started.then(() => settings.initialize().catch(console.warn));
     return settings;
   },
 };
