@@ -13,8 +13,12 @@ dependencies:
   - python >=3.9,<3.10
   # build
   - doit >=0.33,<0.34
+<<<<<<< HEAD
   - flit >=3.1,!=3.5.0
 <<<<<<< HEAD
+=======
+  - flit >=3.7.1,!=3.5.0
+>>>>>>> use pep621 metadata, update shim versions
   - jupyter-server-mathjax >=0.2.3
 =======
 >>>>>>> some work on flit
