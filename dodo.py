@@ -658,7 +658,7 @@ def task_serve():
     app_indexes = [P.APP / app / "index.html" for app in D.APPS]
 
     yield dict(
-        name="js",
+        name="core:js",
         doc="serve the core app (no extensions) with nodejs",
         uptodate=[lambda: False],
         actions=[U.do("yarn", "serve")],
@@ -666,7 +666,7 @@ def task_serve():
     )
 
     yield dict(
-        name="py",
+        name="core:py",
         doc="serve the core app (no extensions) with python",
         uptodate=[lambda: False],
         actions=[U.do("yarn", "serve")],
