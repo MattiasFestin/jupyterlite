@@ -1331,7 +1331,7 @@ class U:
         subprocess.check_call(["pip", "download", "-r", B.RAW_WHEELS_REQS], cwd=str(B.RAW_WHEELS))
 =======
         subprocess.check_call(
-            [*P.PYM, "pip", "download", "-r", B.RAW_WHEELS_REQS, "--prefer-binary"],
+            [*C.PYM, "pip", "download", "-r", B.RAW_WHEELS_REQS, "--prefer-binary"],
             cwd=str(B.RAW_WHEELS),
         )
 >>>>>>> try pinning flit, mathjax, folium
