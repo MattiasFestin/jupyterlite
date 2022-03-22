@@ -1,6 +1,6 @@
 {
   "name": "@jupyterlite/javascript-kernel",
-  "version": "0.1.0-beta.3",
+  "version": "0.1.0-beta.4",
   "description": "JupyterLite - JavaScript Kernel",
   "homepage": "https://github.com/jupyterlite/jupyterlite",
   "bugs": {
@@ -42,10 +42,14 @@
     "watch": "tsc -b --watch"
   },
   "dependencies": {
-    "@jupyterlite/kernel": "^0.1.0-beta.3",
+<<<<<<< HEAD
+    "@jupyterlite/kernel": "^0.1.0-beta.4",
     "@types/escodegen": "^0.0.7",
     "escodegen": "^2.0.0",
     "espree": "^8.0.0"
+=======
+    "@jupyterlite/kernel": "^0.1.0-beta.4"
+>>>>>>> Publish 0.1.0b4
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
