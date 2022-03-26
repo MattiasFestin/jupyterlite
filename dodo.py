@@ -913,6 +913,7 @@ class C:
         # magic JS interop layer
         "js",
         "pyodide_js",
+        "pyodide",
         # broken?
         "pathspec",
     ]
